@@ -2,7 +2,7 @@
 
 set -e
 
-REPO_URL="https://github.com/NLaundry/MacAutoSetup.git"
+REPO_URL="https://github.com/pafsmith/MacAutoSetup.git"
 CLONE_DIR="$HOME/Projects/MacAutoSetup"
 
 echo "⏳ Bootstrapping MacAutoSetup..."

@@ -40,7 +40,13 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Use GNU Stow to symlink dotfiles
 echo "Setting up dotfiles with GNU Stow..."
-stow --target="$HOME" --dir=./dotfiles zsh vim nvim aerospace
+stow --target="$HOME" --dir=./dotfiles zsh vim nvim tmux aerospace ghostty
+
+# Install tmux plugin manager (TPM)
+if [[ ! -d "$HOME/.tmux/plugins/tpm" ]]; then
+  echo "Installing tmux plugin manager (TPM)..."
+  git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
+fi
 
 # Optionally restart the shell
 exec zsh -l
