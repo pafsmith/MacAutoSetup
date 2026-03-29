@@ -150,3 +150,31 @@ After first setup, open tmux and install plugins with:
 # inside tmux
 Ctrl-s then Shift-i
 ```
+
+## ✅ Shell Todo Workflow
+
+The zsh aliases include a tiny `todo.sh` workflow backed by plain text files:
+
+- Open tasks: `~/DB/todo.txt`
+- Completed tasks: `~/DB/done.txt`
+
+Commands:
+
+- `todo` / `t` / `tl` list tasks
+- `ta <task...>` add a task
+- `td <id>` mark task done
+- `tp <A-Z> <id>` set priority (e.g. `tp A 2`)
+- `te` open `~/DB/todo.txt` in Neovim
+
+## 🗂️ Tmux Project Switcher
+
+Tmux includes a project switcher on `prefix + f` (`Ctrl-s` then `f`).
+
+- Projects are detected as direct child folders of `~/code`
+- Pick a project from an `fzf` list
+- You are switched to that project's tmux session
+- If no session exists yet, one is created in that project directory
+
+Optional override:
+
+- `PROJECTS_DIR` can point to another root directory
