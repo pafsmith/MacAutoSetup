@@ -1,6 +1,4 @@
-#!/usr/bin/env bash
-
-set -euo pipefail
+#!/bin/bash
 
 projects_dir="${PROJECTS_DIR:-$HOME/code}"
 
@@ -9,7 +7,16 @@ if [[ ! -d "$projects_dir" ]]; then
   exit 1
 fi
 
-selected_project="$((find "$projects_dir" -mindepth 1 -maxdepth 1 -type d 2>/dev/null || true) | sort | fzf --prompt="Project > " --height=100% --reverse)"
+cd "$projects_dir"
+
+projects=($(find . -mindepth 1 -maxdepth 1 -type d -not -name '.*' 2>/dev/null | sed 's|^\./||' | sort))
+
+if [[ ${#projects[@]} -eq 0 ]]; then
+  tmux display-message "No projects found in $projects_dir"
+  exit 0
+fi
+
+selected_project="$(printf '%s\n' "${projects[@]}" | /opt/homebrew/bin/fzf --prompt="Project > ")" || exit 0
 
 if [[ -z "${selected_project:-}" ]]; then
   exit 0
@@ -21,7 +28,7 @@ if [[ -z "$session_name" ]]; then
 fi
 
 if ! tmux has-session -t "$session_name" 2>/dev/null; then
-  tmux new-session -d -s "$session_name" -c "$selected_project"
+  tmux new-session -d -s "$session_name" -c "$projects_dir/$selected_project"
 fi
 
 if [[ -n "${TMUX:-}" ]]; then
